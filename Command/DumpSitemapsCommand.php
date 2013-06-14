@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Command to dump the sitemaps to provided directory
@@ -77,6 +78,7 @@ class DumpSitemapsCommand extends ContainerAwareCommand
         $this->getContainer()->get('router')->getContext()->setHost(
             parse_url($input->getOption('host') ?: $this->getContainer()->getParameter('presta_sitemap.dumper_base_url'), PHP_URL_HOST)
         );
+        $this->getContainer()->enterScope('request');
 
         if ($input->getOption('section')) {
             $output->writeln(
