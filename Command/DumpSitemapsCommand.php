@@ -94,7 +94,7 @@ class DumpSitemapsCommand extends ContainerAwareCommand
                 )
             );
         }
-        $filenames = $dumper->dump($targetDir, $input->getOption('section'));
+        $filenames = $dumper->dump($targetDir, $host, $input->getOption('section'));
 
         if ($filenames === false) {
             $output->writeln("<error>No URLs were added to sitemap by EventListeners</error> - this may happen when provided section is invalid");
