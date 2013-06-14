@@ -73,11 +73,7 @@ class DumpSitemapsCommand extends ContainerAwareCommand
         /** @var $dumper \Presta\SitemapBundle\Service\Dumper */
         $dumper = $this->getContainer()->get('presta_sitemap.dumper');
 
-        // Set Router's host used for generating URLs from configuration param
-        // There is no other way to manage domain in CLI
-        $this->getContainer()->get('router')->getContext()->setHost(
-            parse_url($input->getOption('host') ?: $this->getContainer()->getParameter('presta_sitemap.dumper_base_url'), PHP_URL_HOST)
-        );
+        $this->getContainer()->set('request', Request::create($input->getOption('host') ?: $this->getContainer()->getParameter('presta_sitemap.dumper_base_url')));
         $this->getContainer()->enterScope('request');
 
         if ($input->getOption('section')) {
